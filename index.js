@@ -1,3 +1,7 @@
+// npm install --save docxtemplater pizzip
+
+// ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ comando para genera el word usar eso
+
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
