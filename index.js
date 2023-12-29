@@ -24,7 +24,7 @@ app.use((req, res, next) => {
   });
 
 app.get('/', (req, res) =>{
-    res.send("hola")
+    res.send("hola soy marco")
 })
 
 app.post('/generar', (req, res) => {
