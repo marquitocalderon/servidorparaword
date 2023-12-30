@@ -1,5 +1,8 @@
 // npm install --save docxtemplater pizzip
 
+// PARA IMAGEN ES ESTO : 
+// npm install git+https://github.com/pwndoc/docxtemplater-image-module-pwndoc   
+
 // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ comando para genera el word usar eso
 
 const express = require('express');
@@ -8,7 +11,7 @@ const path = require('path');
 const cors = require('cors');
 const PizZip = require('pizzip');
 const Docxtemplater = require('docxtemplater');
-
+const ImageModule = require("docxtemplater-image-module-pwndoc");
 const app = express();
 const port = 4000;
 
@@ -24,7 +27,7 @@ app.use((req, res, next) => {
   });
 
 app.get('/', (req, res) =>{
-    res.send("hola soy marco")
+    res.send("hola")
 })
 
 app.post('/generar', (req, res) => {
@@ -38,23 +41,44 @@ app.post('/generar', (req, res) => {
         path.resolve(__dirname, 'prueba.docx'),
         'binary'
     );
+
+    const imagen1 = "foto.jpg"; // Ruta de la primera imagen a insertar
+
+
     // Crea una instancia de PizZip utilizando el contenido del archivo .docx
 
     const zip = new PizZip(content);
+    const imageOptions = {
+        centered: false,
+        getImage(tagValue, tagName) {
+            console.log({ tagValue, tagName });
+            return fs.readFileSync(tagValue);
+        },
+        getSize() {
+            // it also is possible to return a size in centimeters, like this : return [ "2cm", "3cm" ];
+            return [500, 500];
+        },
+    };
+
+
 
        // Crea una instancia de Docxtemplater, configurando opciones como 'paragraphLoop' y 'linebreaks'
     const doc = new Docxtemplater(zip, {
-        paragraphLoop: true,
-        linebreaks: true,
+        modules: [new ImageModule(imageOptions)],
     });
+    
 
     // Renderiza el documento con los datos proporcionados, osea manda los datos que deseas al word , y esos variables tienes que ponerlo a tu word
     doc.render({
         nombre: nombre,
         edad: edad,
         direccion: direccion,
+        'foto': imagen1
 
     });
+
+  
+
 
     // Genera el documento como un 'nodebuffer'
     const documentoword = doc.getZip().generate({
