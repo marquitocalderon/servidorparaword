@@ -86,6 +86,28 @@ app.post('/generar', (req, res) => {
         compression: 'DEFLATE',
     });
 
+    
+    // const cloudinary = require('cloudinary').v2; // Importa la librería de Cloudinary
+
+    // // Configura la librería de Cloudinary con tus credenciales
+    // cloudinary.config({
+    //   cloud_name: 'TU_CLOUD_NAME',
+    //   api_key: 'TU_API_KEY',
+    //   api_secret: 'TU_API_SECRET'
+    // });
+    
+    // // En tu endpoint después de haber generado el documento Word
+    // cloudinary.uploader.upload_stream({ resource_type: 'raw' }, (error, result) => {
+    //   if (error) {
+    //     console.error(error);
+    //     res.status(500).send('Error al subir a Cloudinary');
+    //   } else {
+    //     // Aquí puedes obtener la URL del archivo subido a Cloudinary desde result.secure_url
+    //     console.log('URL de Cloudinary:', result.secure_url);
+    //     res.status(200).send('Documento subido a Cloudinary');
+    //   }
+    // }).end(documentoword); // 'documentoword' es tu documento
+
  // Configura los encabezados de la respuesta
 res.setHeader('Content-Type', 'application/msword'); // Tipo MIME para documentos Word
 res.setHeader('Content-Disposition', `${nombretitulo}`); // Nombre del archivo para la descarga
